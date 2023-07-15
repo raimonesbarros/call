@@ -19,7 +19,7 @@ export const FormAnnotation = styled("div", {
     color: "$gray400",
 
     span: {
-      color: "#FF3030",
+      color: "#F75a68",
     },
   },
 })
