@@ -31,7 +31,7 @@ export default async function handler(
     },
   })
 
-  setCookie({ res }, "@call: userId", user.id, {
+  setCookie({ res }, "@call:userId", user.id, {
     maxAge: 60 * 60 * 24 * 7, // 7 days
     path: "/",
   })
