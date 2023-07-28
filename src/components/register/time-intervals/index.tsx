@@ -1,10 +1,11 @@
 import { ArrowRight } from "phosphor-react"
 import { Controller, useFieldArray, useForm } from "react-hook-form"
 import { z } from "zod"
-import { convertTimeStringToMinutes } from "../../../utils/convert-time-string-to-minutes"
-import { getWeekDays } from "../../../utils/get-week-days"
 import { Container, Header } from "../styles"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { api } from "@lib/axios"
+import { getWeekDays } from "src/utils/get-week-days"
+import { convertTimeStringToMinutes } from "src/utils/convert-time-string-to-minutes"
 import {
   Button,
   Checkbox,
@@ -63,6 +64,7 @@ const timeIntervalsFormSchema = z.object({
 })
 
 type TimeIntervalsFormInput = z.input<typeof timeIntervalsFormSchema>
+type TimeIntervalsFormoutput = z.output<typeof timeIntervalsFormSchema>
 
 export default function TimeIntervals() {
   const {
@@ -95,8 +97,12 @@ export default function TimeIntervals() {
 
   const intervals = watch("intervals")
 
-  async function handleSetTimeIntervals(data: TimeIntervalsFormInput) {
-    console.log(data)
+  async function handleSetTimeIntervals(data: any) {
+    const { intervals } = data as TimeIntervalsFormoutput
+
+    await api.post("/users/time-intervals", {
+      intervals,
+    })
   }
 
   return (
