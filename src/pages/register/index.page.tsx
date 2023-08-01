@@ -99,5 +99,3 @@ export default function Register() {
     </Container>
   )
 }
-
-export * from "./styles"

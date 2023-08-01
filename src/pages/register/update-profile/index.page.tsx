@@ -16,7 +16,7 @@ import { useForm } from "react-hook-form"
 import { z } from "zod"
 import { Container, Header } from "../styles"
 import { FormAnnotation, ProfileBox } from "./styles"
-import { buildNextAuthOptions } from "src/pages/api/auth/[...nextauth]"
+import { buildNextAuthOptions } from "src/pages/api/auth/[...nextauth].api"
 import { api } from "@lib/axios"
 
 const updateProfileSchema = z.object({
@@ -51,7 +51,7 @@ export default function UpdateProfile() {
   return (
     <Container>
       <Header>
-        <Heading as="strong">Bem-vindo ao Ignite Call!</Heading>
+        <Heading as="strong">Bem-vindo ao Call!</Heading>
         <Text>
           Precisamos de algumas informações para criar seu perfil! Ah, você pode
           editar essas informações depois.

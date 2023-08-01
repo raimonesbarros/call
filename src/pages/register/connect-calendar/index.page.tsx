@@ -1,11 +1,9 @@
 import { Button, Heading, MultiStep, Text } from "@ignite-ui/react"
 import { useRouter } from "next/router"
 import { ArrowRight, Check } from "phosphor-react"
-// import { api } from "../../../lib/axios"
 import { AuthError, ConnectBox, ConnectItem } from "./style"
-import { Container } from ".."
-import { Header } from ".."
 import { signIn, useSession } from "next-auth/react"
+import { Container, Header } from "../styles"
 
 export default function ConnectCalendar() {
   const session = useSession()

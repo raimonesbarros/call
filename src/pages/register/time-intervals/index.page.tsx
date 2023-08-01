@@ -1,7 +1,6 @@
 import { ArrowRight } from "phosphor-react"
 import { Controller, useFieldArray, useForm } from "react-hook-form"
 import { z } from "zod"
-import { Container, Header } from "../styles"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { api } from "@lib/axios"
 import { getWeekDays } from "src/utils/get-week-days"
@@ -23,6 +22,7 @@ import {
   IntervalInputs,
   IntervalItem,
 } from "./styles"
+import { Container, Header } from "../styles"
 
 const timeIntervalsFormSchema = z.object({
   intervals: z
