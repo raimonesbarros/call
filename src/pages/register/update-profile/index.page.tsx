@@ -36,8 +36,6 @@ export default function UpdateProfile() {
 
   const session = useSession()
 
-  console.log(session.data)
-
   const router = useRouter()
 
   async function handleUpdateProfile(data: UpdateProfileData) {
