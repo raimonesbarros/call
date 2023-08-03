@@ -1,9 +1,12 @@
 import { Button, Text, TextArea, TextInput } from "@ignite-ui/react"
 import { CalendarBlank, Clock } from "phosphor-react"
+import dayjs from "dayjs"
+import { useRouter } from "next/router"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 import { ConfirmForm, FormActions, FormError, FormHeader } from "./styles"
+import { api } from "@lib/axios"
 
 const confirmFormSchema = z.object({
   name: z.string().min(3, { message: "O nome precisa no mínimo 3 caracteres" }),
@@ -13,7 +16,15 @@ const confirmFormSchema = z.object({
 
 type ConfirmFormData = z.infer<typeof confirmFormSchema>
 
-export function ConfirmStep() {
+interface ConfirmStepProps {
+  schedulingDate: Date
+  returnToCalendar: () => void
+}
+
+export function ConfirmStep({
+  schedulingDate,
+  returnToCalendar,
+}: ConfirmStepProps) {
   const {
     register,
     handleSubmit,
@@ -22,20 +33,35 @@ export function ConfirmStep() {
     resolver: zodResolver(confirmFormSchema),
   })
 
-  function handleConfirmScheduling(data: ConfirmFormData) {
-    console.log(data)
+  const router = useRouter()
+  const username = String(router.query.username)
+
+  async function handleConfirmScheduling(data: ConfirmFormData) {
+    const { name, email, observations } = data
+
+    await api.post(`/users/${username}/schedule`, {
+      name,
+      email,
+      observations,
+      date: schedulingDate,
+    })
+
+    returnToCalendar()
   }
+
+  const describedDate = dayjs(schedulingDate).format("DD[ de ]MMMM[ de ]YYYY")
+  const describedTime = dayjs(schedulingDate).format("HH:mm[h]")
 
   return (
     <ConfirmForm as="form" onSubmit={handleSubmit(handleConfirmScheduling)}>
       <FormHeader>
         <Text>
           <CalendarBlank />
-          22 de Setembro de 2022
+          {describedDate}
         </Text>
         <Text>
           <Clock />
-          18:00h
+          {describedTime}
         </Text>
       </FormHeader>
 
@@ -63,7 +89,7 @@ export function ConfirmStep() {
       </label>
 
       <FormActions>
-        <Button type="button" variant="tertiary">
+        <Button type="button" variant="tertiary" onClick={returnToCalendar}>
           Cancelar
         </Button>
         <Button type="submit" disabled={isSubmitting}>
